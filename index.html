@@ -176,7 +176,12 @@ nav a{color:white;text-decoration:none;}
 <div class="order-section">
 <h2>訂單</h2>
 
-<form id="orderForm">
+<form id="orderForm" action="https://formsubmit.co/yp11251124@yphs.tp.edu.tw" method="POST">
+<input type="hidden" name="order_details" id="order_details">
+<input type="hidden" name="total_price" id="total_price">
+<input type="hidden" name="_subject" value="阿嬤柑仔店新訂單">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
 <input name="customer_name" placeholder="姓名" required>
 <input name="customer_email" placeholder="Email" required>
 <textarea name="message" placeholder="留言"></textarea>
@@ -252,13 +257,11 @@ function scrollToProducts(){
     .scrollIntoView({behavior:"smooth"});
 }
 
-/* ===== EmailJS ===== */
 document.getElementById("orderForm")
-.addEventListener("submit", async function(event){
-
-    event.preventDefault();
+.addEventListener("submit", function(event){
 
     if(cart.length === 0){
+        event.preventDefault();
         showToast("購物車是空的");
         return;
     }
@@ -268,36 +271,11 @@ document.getElementById("orderForm")
 
     cart.forEach(i=>{
         cartText += `${i.name} x${i.qty}\n`;
-        total += i.price*i.qty;
+        total += i.price * i.qty;
     });
 
-    const templateParams = {
-        customer_name: this.customer_name.value,
-        customer_email: this.customer_email.value,
-        message: this.message.value,
-        order_details: cartText,
-        total_price: total
-    };
-
-    try{
-
-        await emailjs.send(
-            "YOUR_SERVICE_ID",
-            "YOUR_TEMPLATE_ID",
-            templateParams
-        );
-
-        showToast("訂單已送出");
-
-        cart = [];
-        save();
-        render();
-        this.reset();
-
-    }catch(error){
-        console.error("EmailJS Error:", error);
-        showToast("寄送失敗，請檢查 EmailJS 設定");
-    }
+    document.getElementById("order_details").value = cartText;
+    document.getElementById("total_price").value = total;
 
 });
 
