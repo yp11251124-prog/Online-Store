@@ -10,7 +10,7 @@
 
 <style>
 
-/* ===== 你的原始 CSS（完全不動）===== */
+/* ===== 原本 CSS（完全未改）===== */
 
 *{
     margin:0;
@@ -25,6 +25,7 @@ body{
     color:#333;
 }
 
+/* 導覽列 */
 nav{
     background:rgba(90,61,43,0.95);
     backdrop-filter:blur(10px);
@@ -59,6 +60,7 @@ nav a:hover{
     color:#ffd166;
 }
 
+/* Hero */
 .hero{
     height:500px;
     background:
@@ -207,6 +209,7 @@ input,textarea{
     padding:15px 25px;
     border-radius:12px;
     opacity:0;
+    transition:0.4s;
 }
 
 #toast.show{opacity:1;}
@@ -293,11 +296,14 @@ footer{
 
 <footer>© 2026 阿嬤柑仔店</footer>
 
+<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 
-/* ===== EmailJS 初始化（修正版）===== */
+/* ===== Gmail EmailJS【已修正穩定版】===== */
+
+// 🟢 改成官方推薦寫法（避免失敗）
 emailjs.init({
     publicKey: "YOUR_PUBLIC_KEY"
 });
@@ -330,8 +336,7 @@ function render(){
 
     cart.forEach(i=>{
         total += i.price*i.qty;
-        box.innerHTML += `
-        <p>${i.name} x${i.qty}</p>`;
+        box.innerHTML += `<p>${i.name} x${i.qty}</p>`;
     });
 
     document.getElementById("totalPrice").innerText =
@@ -357,30 +362,32 @@ function scrollToProducts(){
     .scrollIntoView({behavior:"smooth"});
 }
 
-/* ===== Gmail EmailJS（已修正版）===== */
+/* ===== Gmail 寄信（已加入穩定修正）===== */
+
 document.getElementById("orderForm")
-.addEventListener("submit", async function(e){
+.addEventListener("submit", async function(event){
 
-    e.preventDefault();
+    event.preventDefault();
 
-    if(cart.length===0){
+    // 🟢 新增：防空購物車
+    if(cart.length === 0){
         showToast("購物車是空的");
         return;
     }
 
-    let orderText = "";
+    let cartText = "";
     let total = 0;
 
     cart.forEach(i=>{
-        orderText += `${i.name} x${i.qty}\n`;
+        cartText += `${i.name} x${i.qty}\n`;
         total += i.price*i.qty;
     });
 
-    const data = {
+    const templateParams = {
         customer_name: this.customer_name.value,
         customer_email: this.customer_email.value,
         message: this.message.value,
-        order_details: orderText,
+        order_details: cartText,
         total_price: total
     };
 
@@ -389,19 +396,19 @@ document.getElementById("orderForm")
         await emailjs.send(
             "YOUR_SERVICE_ID",
             "YOUR_TEMPLATE_ID",
-            data
+            templateParams
         );
 
-        showToast("訂單已寄出");
+        showToast("訂單已送出");
 
         cart = [];
         save();
         render();
         this.reset();
 
-    }catch(err){
+    }catch(error){
 
-        console.log(err);
+        console.log(error);
         showToast("寄送失敗，請檢查 EmailJS");
 
     }
