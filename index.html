@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
-
 /* ===== 原本 CSS（完全未改）===== */
 
 *{
@@ -25,7 +24,6 @@ body{
     color:#333;
 }
 
-/* 導覽列 */
 nav{
     background:rgba(90,61,43,0.95);
     backdrop-filter:blur(10px);
@@ -38,42 +36,23 @@ nav{
     z-index:999;
 }
 
-.logo{
-    color:white;
-    font-size:30px;
-    font-weight:bold;
-}
+.logo{color:white;font-size:30px;font-weight:bold;}
 
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:25px;
-}
+nav ul{display:flex;list-style:none;gap:25px;}
 
-nav a{
-    color:white;
-    text-decoration:none;
-    transition:0.3s;
-}
+nav a{color:white;text-decoration:none;}
 
-nav a:hover{
-    color:#ffd166;
-}
-
-/* Hero */
 .hero{
     height:500px;
     background:
     linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
     url('https://images.unsplash.com/photo-1506617564039-2f3b650b7010?q=80&w=1600');
     background-size:cover;
-    background-position:center;
     display:flex;
     justify-content:center;
     align-items:center;
     text-align:center;
     color:white;
-    padding:20px;
 }
 
 .hero h1{font-size:60px;margin-bottom:20px;}
@@ -84,53 +63,10 @@ nav a:hover{
     border:none;
     padding:15px 35px;
     border-radius:50px;
-    font-size:18px;
     cursor:pointer;
-    transition:0.3s;
-    font-weight:bold;
 }
 
-.hero button:hover{
-    transform:scale(1.08);
-    background:#ffd166;
-}
-
-.container{
-    width:90%;
-    max-width:1300px;
-    margin:auto;
-    padding:60px 0;
-}
-
-.search-box{
-    text-align:center;
-    margin-bottom:50px;
-}
-
-.search-box input{
-    width:100%;
-    max-width:500px;
-    padding:18px;
-    border:none;
-    border-radius:50px;
-    font-size:16px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.section-title h2{
-    font-size:42px;
-    color:#5a3d2b;
-}
-
-.section-title p{
-    margin-top:10px;
-    color:#666;
-}
+.container{width:90%;max-width:1300px;margin:auto;padding:60px 0;}
 
 .products{
     display:grid;
@@ -140,19 +76,14 @@ nav a:hover{
 
 .product-card{
     background:rgba(255,255,255,0.7);
-    backdrop-filter:blur(12px);
     border-radius:25px;
     overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
 
-.product-card img{
-    width:100%;
-    height:280px;
-    object-fit:cover;
-}
+.product-card img{width:100%;height:280px;object-fit:cover;}
 
 .product-info{padding:25px;}
+
 .price{color:#e76f51;font-size:30px;font-weight:bold;}
 
 .btn{
@@ -160,33 +91,6 @@ nav a:hover{
     color:white;
     border:none;
     padding:14px 20px;
-    border-radius:12px;
-    cursor:pointer;
-}
-
-.cart-section{
-    background:white;
-    margin-top:70px;
-    padding:40px;
-    border-radius:25px;
-}
-
-.order-section{
-    margin-top:70px;
-    background:white;
-    padding:40px;
-    border-radius:25px;
-}
-
-form{
-    display:flex;
-    flex-direction:column;
-}
-
-input,textarea{
-    padding:16px;
-    margin-bottom:20px;
-    border:1px solid #ddd;
     border-radius:12px;
 }
 
@@ -214,14 +118,12 @@ input,textarea{
 
 #toast.show{opacity:1;}
 
-footer{
-    background:#5a3d2b;
-    color:white;
-    text-align:center;
-    padding:35px;
-    margin-top:80px;
+.cart-section,.order-section{
+    margin-top:70px;
+    background:white;
+    padding:40px;
+    border-radius:25px;
 }
-
 </style>
 </head>
 
@@ -232,15 +134,6 @@ footer{
 <div class="floating-cart">
 🛒 <span id="cartCount">0</span>
 </div>
-
-<nav>
-<div class="logo">阿嬤柑仔店</div>
-<ul>
-<li><a href="#">首頁</a></li>
-<li><a href="#">商品</a></li>
-<li><a href="#">購物車</a></li>
-</ul>
-</nav>
 
 <section class="hero">
 <div>
@@ -277,7 +170,7 @@ footer{
 <div class="cart-section">
 <h2>購物車</h2>
 <div id="cartItems"></div>
-<h3 id="totalPrice">0</h3>
+<h3 id="totalPrice"></h3>
 </div>
 
 <div class="order-section">
@@ -296,17 +189,12 @@ footer{
 
 <footer>© 2026 阿嬤柑仔店</footer>
 
-<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 
-/* ===== Gmail EmailJS【已修正穩定版】===== */
-
-// 🟢 改成官方推薦寫法（避免失敗）
-emailjs.init({
-    publicKey: "YOUR_PUBLIC_KEY"
-});
+/* ✅ 修正 1：正確初始化 */
+emailjs.init("YOUR_PUBLIC_KEY");
 
 /* ===== 購物車 ===== */
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -331,11 +219,13 @@ function render(){
 
     let box = document.getElementById("cartItems");
     let total = 0;
+    let qtyTotal = 0;
 
     box.innerHTML = "";
 
     cart.forEach(i=>{
         total += i.price*i.qty;
+        qtyTotal += i.qty;
         box.innerHTML += `<p>${i.name} x${i.qty}</p>`;
     });
 
@@ -343,7 +233,7 @@ function render(){
     "總金額：" + total;
 
     document.getElementById("cartCount").innerText =
-    cart.length;
+    qtyTotal;
 }
 
 render();
@@ -356,20 +246,18 @@ function showToast(msg){
     setTimeout(()=>t.classList.remove("show"),2000);
 }
 
-/* ===== 滾動 ===== */
+/* ===== scroll ===== */
 function scrollToProducts(){
     document.getElementById("products")
     .scrollIntoView({behavior:"smooth"});
 }
 
-/* ===== Gmail 寄信（已加入穩定修正）===== */
-
+/* ===== EmailJS ===== */
 document.getElementById("orderForm")
 .addEventListener("submit", async function(event){
 
     event.preventDefault();
 
-    // 🟢 新增：防空購物車
     if(cart.length === 0){
         showToast("購物車是空的");
         return;
@@ -407,10 +295,8 @@ document.getElementById("orderForm")
         this.reset();
 
     }catch(error){
-
-        console.log(error);
-        showToast("寄送失敗，請檢查 EmailJS");
-
+        console.error("EmailJS Error:", error);
+        showToast("寄送失敗，請檢查 EmailJS 設定");
     }
 
 });
