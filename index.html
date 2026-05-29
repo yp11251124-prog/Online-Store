@@ -1,976 +1,251 @@
-```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿嬤柑仔店｜最終電商版</title>
 
-<title>阿嬤柑仔店｜完整版電商網站</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Noto Sans TC', sans-serif;
-}
-
 body{
-    background:linear-gradient(135deg,#fff7ed,#ffe0b2,#ffd6a5);
-    min-height:100vh;
-    color:#333;
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#fff3e0,#ffe0b2);
 }
 
-/* 導覽列 */
-
-nav{
-    background:rgba(90,61,43,0.95);
-    backdrop-filter:blur(10px);
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:18px 8%;
-
-    position:sticky;
-    top:0;
-    z-index:999;
-}
-
-.logo{
+header{
+    background:#5a3d2b;
     color:white;
-    font-size:30px;
-    font-weight:bold;
-}
-
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:25px;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    transition:0.3s;
-}
-
-nav a:hover{
-    color:#ffd166;
-}
-
-/* Hero */
-
-.hero{
-
-    height:500px;
-
-    background:
-    linear-gradient(
-        rgba(0,0,0,0.45),
-        rgba(0,0,0,0.45)
-    ),
-    url('https://images.unsplash.com/photo-1506617564039-2f3b650b7010?q=80&w=1600');
-
-    background-size:cover;
-    background-position:center;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    text-align:center;
-    color:white;
-
     padding:20px;
+    text-align:center;
 }
-
-.hero h1{
-    font-size:60px;
-    margin-bottom:20px;
-}
-
-.hero p{
-    font-size:22px;
-    margin-bottom:30px;
-}
-
-.hero button{
-    background:#ffb703;
-    border:none;
-    padding:15px 35px;
-    border-radius:50px;
-    font-size:18px;
-    cursor:pointer;
-    transition:0.3s;
-    font-weight:bold;
-}
-
-.hero button:hover{
-    transform:scale(1.08);
-    background:#ffd166;
-}
-
-/* container */
 
 .container{
     width:90%;
-    max-width:1300px;
+    max-width:1000px;
     margin:auto;
-    padding:60px 0;
+    padding:20px;
 }
 
-/* 搜尋 */
-
-.search-box{
-    text-align:center;
-    margin-bottom:50px;
-}
-
-.search-box input{
-
-    width:100%;
-    max-width:500px;
-
-    padding:18px;
-
-    border:none;
-    border-radius:50px;
-
-    font-size:16px;
-
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-/* 標題 */
-
-.section-title{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.section-title h2{
-    font-size:42px;
-    color:#5a3d2b;
-}
-
-.section-title p{
-    margin-top:10px;
-    color:#666;
-}
-
-/* 商品區 */
-
+/* 商品 */
 .products{
-
     display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(300px,1fr));
-
-    gap:30px;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
 }
 
-.product-card{
-
-    background:rgba(255,255,255,0.7);
-
-    backdrop-filter:blur(12px);
-
-    border-radius:25px;
-
-    overflow:hidden;
-
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-
-    transition:0.4s;
-
-    position:relative;
+.card{
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-.product-card:hover{
-    transform:translateY(-10px);
-}
-
-.tag{
-
-    position:absolute;
-
-    top:15px;
-    left:15px;
-
-    background:#e63946;
-    color:white;
-
-    padding:6px 14px;
-
-    border-radius:30px;
-
-    font-size:14px;
-}
-
-.product-card img{
+.card img{
     width:100%;
-    height:280px;
-    object-fit:cover;
-}
-
-.product-info{
-    padding:25px;
-}
-
-.product-info h3{
-    font-size:28px;
-    margin-bottom:15px;
-}
-
-.price{
-    color:#e76f51;
-    font-size:30px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
-.product-info p{
-    color:#666;
-    line-height:1.8;
-    margin-bottom:20px;
-}
-
-/* 按鈕 */
-
-.btn{
-
-    background:#5a3d2b;
-    color:white;
-
-    border:none;
-
-    padding:14px 20px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:#7f5539;
+    border-radius:10px;
 }
 
 /* 購物車 */
-
-.cart-section{
-
+.cart{
     background:white;
-
-    margin-top:70px;
-
-    padding:40px;
-
-    border-radius:25px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    margin-top:30px;
+    padding:20px;
+    border-radius:15px;
 }
 
-.cart-section h2{
-    margin-bottom:30px;
-}
-
-.cart-item{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:20px 0;
-
-    border-bottom:1px solid #ddd;
-}
-
-.qty-control{
-
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.qty-btn{
-
-    width:30px;
-    height:30px;
-
-    border:none;
-
-    border-radius:50%;
-
+/* 按鈕 */
+button{
     background:#5a3d2b;
     color:white;
-
+    border:none;
+    padding:10px;
+    border-radius:8px;
     cursor:pointer;
 }
 
+button:hover{
+    background:#7a533c;
+}
+
 /* 表單 */
-
-.order-section{
-
-    margin-top:70px;
-
-    background:white;
-
-    padding:40px;
-
-    border-radius:25px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-.order-section h2{
-    margin-bottom:30px;
-}
-
 form{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-top:30px;
     display:flex;
     flex-direction:column;
+    gap:10px;
 }
 
-input,
-textarea,
-select{
-
-    padding:16px;
-
-    margin-bottom:20px;
-
-    border:1px solid #ddd;
-
-    border-radius:12px;
-
-    font-size:16px;
+input,textarea{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
 }
-
-/* 浮動購物車 */
-
-.floating-cart{
-
-    position:fixed;
-
-    right:20px;
-    bottom:20px;
-
-    background:#5a3d2b;
-    color:white;
-
-    padding:15px 20px;
-
-    border-radius:50px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-
-    z-index:999;
-}
-
-/* Toast */
-
-#toast{
-
-    position:fixed;
-
-    top:30px;
-    right:30px;
-
-    background:#333;
-    color:white;
-
-    padding:15px 25px;
-
-    border-radius:12px;
-
-    opacity:0;
-
-    transition:0.4s;
-
-    z-index:9999;
-}
-
-#toast.show{
-    opacity:1;
-}
-
-/* Footer */
-
-footer{
-
-    background:#5a3d2b;
-    color:white;
-
-    text-align:center;
-
-    padding:35px;
-
-    margin-top:80px;
-}
-
-/* 深色模式 */
-
-.dark{
-
-    background:#121212;
-    color:white;
-}
-
-.dark .product-card,
-.dark .cart-section,
-.dark .order-section{
-    background:#1e1e1e;
-    color:white;
-}
-
-/* 手機版 */
-
-@media(max-width:768px){
-
-    .hero h1{
-        font-size:42px;
-    }
-
-    nav{
-        flex-direction:column;
-        gap:10px;
-    }
-
-    nav ul{
-        flex-wrap:wrap;
-        justify-content:center;
-    }
-
-    .cart-item{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:15px;
-    }
-
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- Toast -->
-<div id="toast"></div>
-
-<!-- 浮動購物車 -->
-<div class="floating-cart">
-🛒 <span id="cartCount">0</span>
-</div>
-
-<!-- 導覽列 -->
-<nav>
-
-    <div class="logo">
-        阿嬤柑仔店
-    </div>
-
-    <ul>
-        <li><a href="#">首頁</a></li>
-        <li><a href="#">商品</a></li>
-        <li><a href="#">購物車</a></li>
-        <li><a href="#">聯絡我們</a></li>
-    </ul>
-
-</nav>
-
-<!-- Hero -->
-
-<section class="hero">
-
-    <div>
-
-        <h1>
-            古早味的幸福
-        </h1>
-
-        <p>
-            香甜香蕉 × 經典蘇打餅  
-            找回最純真的回憶
-        </p>
-
-        <button onclick="scrollToProducts()">
-            立即選購
-        </button>
-
-    </div>
-
-</section>
+<header>
+<h1>阿嬤柑仔店 🛒</h1>
+<p>簡單可靠電商系統（EmailJS + Gmail）</p>
+</header>
 
 <div class="container">
 
-    <!-- 搜尋 -->
+<!-- 商品 -->
+<div class="products">
 
-    <div class="search-box">
-
-        <input
-        type="text"
-        id="searchInput"
-        placeholder="搜尋商品..."
-        onkeyup="searchProducts()">
-
+    <div class="card">
+        <img src="https://image.pxgo.com.tw/pic/2025/10/13/0ebc40a0ce0e474a9f60cb4ee5c4682c.jpg">
+        <h3>紫菜蘇打餅</h3>
+        <p>NT$ 20</p>
+        <button onclick="add('紫菜蘇打餅',20)">加入購物車</button>
     </div>
 
-    <!-- 標題 -->
-
-    <div class="section-title">
-
-        <h2>熱門商品</h2>
-
-        <p>
-            精選台灣古早味商品
-        </p>
-
+    <div class="card">
+        <img src="https://image.pxgo.com.tw/pic/2026/05/26/bc30fd06f02b47d897cb064291c4a230.jpg">
+        <h3>香蕉（產銷履歷）</h3>
+        <p>NT$ 30</p>
+        <button onclick="add('香蕉',30)">加入購物車</button>
     </div>
-
-    <!-- 商品區 -->
-
-    <section class="products" id="products">
-
-        <!-- 商品1 -->
-
-        <div class="product-card">
-
-            <div class="tag">
-                熱銷商品
-            </div>
-
-            <img src="https://image.pxgo.com.tw/pic/2025/10/13/0ebc40a0ce0e474a9f60cb4ee5c4682c.jpg">
-
-            <div class="product-info">
-
-                <h3>紫菜蘇打餅</h3>
-
-                <div class="price">
-                    NT$ 20
-                </div>
-
-                <p>
-                    酥脆香濃，
-                    讓人一口接一口。
-                </p>
-
-                <button
-                class="btn"
-                onclick="addToCart('紫菜蘇打餅',20)">
-                    加入購物車
-                </button>
-
-            </div>
-
-        </div>
-
-        <!-- 商品2 -->
-
-        <div class="product-card">
-
-            <div class="tag">
-                產銷履歷
-            </div>
-
-            <img src="https://image.pxgo.com.tw/pic/2026/05/26/bc30fd06f02b47d897cb064291c4a230.jpg">
-
-            <div class="product-info">
-
-                <h3>香蕉（產銷履歷）</h3>
-
-                <div class="price">
-                    NT$ 30
-                </div>
-
-                <p>
-                    香甜軟嫩，
-                    天然健康。
-                </p>
-
-                <button
-                class="btn"
-                onclick="addToCart('香蕉（產銷履歷）',30)">
-                    加入購物車
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- 購物車 -->
-
-    <section class="cart-section">
-
-        <h2>🛒 我的購物車</h2>
-
-        <div id="cartItems"></div>
-
-        <h3 id="totalPrice">
-            總金額：NT$ 0
-        </h3>
-
-    </section>
-
-    <!-- 訂單 -->
-
-    <section class="order-section">
-
-        <h2>立即下單</h2>
-
-        <form id="orderForm">
-
-            <input
-            type="text"
-            name="customer_name"
-            placeholder="姓名"
-            required>
-
-            <input
-            type="email"
-            name="customer_email"
-            placeholder="Email"
-            required>
-
-            <textarea
-            name="message"
-            rows="5"
-            placeholder="留言內容"></textarea>
-
-            <button class="btn">
-                送出訂單
-            </button>
-
-        </form>
-
-    </section>
 
 </div>
 
-<!-- Footer -->
+<!-- 購物車 -->
+<div class="cart">
+<h2>購物車</h2>
+<div id="cartList"></div>
+<h3 id="total">總金額：0</h3>
+</div>
 
-<footer>
+<!-- 訂單 -->
+<form id="orderForm">
+<h2>訂單表單</h2>
 
-    <p>
-        © 2026 阿嬤柑仔店
-    </p>
+<input name="name" placeholder="姓名" required>
+<input name="email" placeholder="Email" required>
+<textarea name="msg" placeholder="備註"></textarea>
 
-</footer>
+<button type="submit">送出訂單</button>
+</form>
 
-<!-- EmailJS -->
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</div>
 
 <script>
 
-/* EmailJS */
-
+// 初始化 EmailJS
 emailjs.init("YOUR_PUBLIC_KEY");
 
-/* 購物車 */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let cart =
-JSON.parse(localStorage.getItem("cart"))
-|| [];
+// 加入購物車
+function add(name, price){
 
-/* 加入購物車 */
+    let item = cart.find(i => i.name === name);
 
-function addToCart(name,price){
-
-    const existing =
-    cart.find(item=>item.name===name);
-
-    if(existing){
-
-        existing.qty++;
-
-    }else{
-
-        cart.push({
-
-            name:name,
-            price:price,
-            qty:1
-
-        });
-
+    if(item){
+        item.qty++;
+    } else {
+        cart.push({name, price, qty:1});
     }
 
-    saveCart();
-
-    updateCart();
-
-    showToast("已加入購物車");
-
+    save();
+    render();
 }
 
-/* 更新購物車 */
+// 儲存
+function save(){
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
 
-function updateCart(){
+// 渲染
+function render(){
 
-    const cartItems =
-    document.getElementById("cartItems");
-
-    const totalPrice =
-    document.getElementById("totalPrice");
-
-    const cartCount =
-    document.getElementById("cartCount");
-
-    cartItems.innerHTML="";
-
+    let list = document.getElementById("cartList");
     let total = 0;
 
-    cart.forEach((item,index)=>{
+    list.innerHTML = "";
 
-        total += item.price * item.qty;
+    cart.forEach((i,index)=>{
 
-        cartItems.innerHTML += `
+        total += i.price * i.qty;
 
-        <div class="cart-item">
-
-            <div>
-
-                <h3>${item.name}</h3>
-
-                <p>
-                    NT$ ${item.price}
-                </p>
-
-            </div>
-
-            <div class="qty-control">
-
-                <button
-                class="qty-btn"
-                onclick="decreaseQty(${index})">
-                -
-                </button>
-
-                <span>${item.qty}</span>
-
-                <button
-                class="qty-btn"
-                onclick="increaseQty(${index})">
-                +
-                </button>
-
-                <button
-                class="btn"
-                onclick="removeItem(${index})">
-                    刪除
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-
+        list.innerHTML += `
+        <p>
+        ${i.name} x ${i.qty}
+        <button onclick="del(${index})">刪除</button>
+        </p>`;
     });
 
-    totalPrice.innerHTML =
-    "總金額：NT$ " + total;
-
-    cartCount.innerText =
-    cart.length;
+    document.getElementById("total").innerText =
+    "總金額：" + total;
 }
 
-/* 增加數量 */
-
-function increaseQty(index){
-
-    cart[index].qty++;
-
-    saveCart();
-
-    updateCart();
+// 刪除
+function del(i){
+    cart.splice(i,1);
+    save();
+    render();
 }
 
-/* 減少數量 */
+// 訂單送出
+document.getElementById("orderForm")
+.addEventListener("submit", async function(e){
 
-function decreaseQty(index){
+    e.preventDefault();
 
-    if(cart[index].qty > 1){
-
-        cart[index].qty--;
-
+    if(cart.length === 0){
+        alert("購物車是空的");
+        return;
     }
 
-    saveCart();
+    let orderText = "";
+    let total = 0;
 
-    updateCart();
-}
-
-/* 刪除 */
-
-function removeItem(index){
-
-    cart.splice(index,1);
-
-    saveCart();
-
-    updateCart();
-
-    showToast("商品已刪除");
-}
-
-/* 儲存 */
-
-function saveCart(){
-
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
-}
-
-/* Toast */
-
-function showToast(message){
-
-    const toast =
-    document.getElementById("toast");
-
-    toast.innerText = message;
-
-    toast.classList.add("show");
-
-    setTimeout(()=>{
-
-        toast.classList.remove("show");
-
-    },2500);
-}
-
-/* 搜尋 */
-
-function searchProducts(){
-
-    const keyword =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase();
-
-    const cards =
-    document.querySelectorAll(".product-card");
-
-    cards.forEach(card=>{
-
-        const title =
-        card.innerText.toLowerCase();
-
-        if(title.includes(keyword)){
-
-            card.style.display="block";
-
-        }else{
-
-            card.style.display="none";
-        }
-
-    });
-}
-
-/* 滾動 */
-
-function scrollToProducts(){
-
-    document
-    .getElementById("products")
-    .scrollIntoView({
-
-        behavior:"smooth"
-
-    });
-}
-
-/* 訂單送出 */
-
-document
-.getElementById("orderForm")
-.addEventListener("submit",
-
-function(event){
-
-    event.preventDefault();
-
-    let cartText = "";
-
-    cart.forEach(item=>{
-
-        cartText +=
-        `${item.name}
-        x ${item.qty}
-        \n`;
-
+    cart.forEach(i=>{
+        orderText += `${i.name} x${i.qty}\n`;
+        total += i.price * i.qty;
     });
 
-    const templateParams = {
-
-        customer_name:
-        this.customer_name.value,
-
-        customer_email:
-        this.customer_email.value,
-
-        message:
-        this.message.value,
-
-        order_details:
-        cartText
-
+    let data = {
+        name:this.name.value,
+        email:this.email.value,
+        msg:this.msg.value,
+        order:orderText,
+        total:total
     };
 
-    emailjs.send(
+    try{
 
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        templateParams
+        await emailjs.send(
+            "YOUR_SERVICE_ID",
+            "YOUR_TEMPLATE_ID",
+            data
+        );
 
-    )
+        alert("訂單已成功寄出");
 
-    .then(()=>{
+        cart = [];
+        save();
+        render();
+        this.reset();
 
-        showToast("訂單已送出");
-
-        cart=[];
-
-        saveCart();
-
-        updateCart();
-
-        document
-        .getElementById("orderForm")
-        .reset();
-
-    })
-
-    .catch((error)=>{
-
-        alert("發送失敗");
-
-        console.log(error);
-
-    });
+    }catch(err){
+        console.log(err);
+        alert("寄送失敗，請檢查 EmailJS 設定");
+    }
 
 });
 
-/* 初始化 */
-
-updateCart();
+// 初始化
+render();
 
 </script>
 
 </body>
 </html>
-```
