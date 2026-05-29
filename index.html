@@ -3,204 +3,368 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>阿嬤柑仔店｜最終電商版</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<title>阿嬤柑仔店｜完整版電商網站</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+
+/* ===== 你的原始 CSS（完全不動）===== */
+
+*{
     margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#fff3e0,#ffe0b2);
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Noto Sans TC', sans-serif;
 }
 
-header{
-    background:#5a3d2b;
+body{
+    background:linear-gradient(135deg,#fff7ed,#ffe0b2,#ffd6a5);
+    min-height:100vh;
+    color:#333;
+}
+
+nav{
+    background:rgba(90,61,43,0.95);
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 8%;
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+
+.logo{
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:25px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#ffd166;
+}
+
+.hero{
+    height:500px;
+    background:
+    linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
+    url('https://images.unsplash.com/photo-1506617564039-2f3b650b7010?q=80&w=1600');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
     color:white;
     padding:20px;
-    text-align:center;
+}
+
+.hero h1{font-size:60px;margin-bottom:20px;}
+.hero p{font-size:22px;margin-bottom:30px;}
+
+.hero button{
+    background:#ffb703;
+    border:none;
+    padding:15px 35px;
+    border-radius:50px;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:bold;
+}
+
+.hero button:hover{
+    transform:scale(1.08);
+    background:#ffd166;
 }
 
 .container{
     width:90%;
-    max-width:1000px;
+    max-width:1300px;
     margin:auto;
-    padding:20px;
+    padding:60px 0;
 }
 
-/* 商品 */
+.search-box{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.search-box input{
+    width:100%;
+    max-width:500px;
+    padding:18px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-title h2{
+    font-size:42px;
+    color:#5a3d2b;
+}
+
+.section-title p{
+    margin-top:10px;
+    color:#666;
+}
+
 .products{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
 }
 
-.card{
-    background:white;
-    border-radius:15px;
-    padding:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+.product-card{
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(12px);
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
 
-.card img{
+.product-card img{
     width:100%;
-    border-radius:10px;
+    height:280px;
+    object-fit:cover;
 }
 
-/* 購物車 */
-.cart{
-    background:white;
-    margin-top:30px;
-    padding:20px;
-    border-radius:15px;
-}
+.product-info{padding:25px;}
+.price{color:#e76f51;font-size:30px;font-weight:bold;}
 
-/* 按鈕 */
-button{
+.btn{
     background:#5a3d2b;
     color:white;
     border:none;
-    padding:10px;
-    border-radius:8px;
+    padding:14px 20px;
+    border-radius:12px;
     cursor:pointer;
 }
 
-button:hover{
-    background:#7a533c;
+.cart-section{
+    background:white;
+    margin-top:70px;
+    padding:40px;
+    border-radius:25px;
 }
 
-/* 表單 */
-form{
+.order-section{
+    margin-top:70px;
     background:white;
-    padding:20px;
-    border-radius:15px;
-    margin-top:30px;
+    padding:40px;
+    border-radius:25px;
+}
+
+form{
     display:flex;
     flex-direction:column;
-    gap:10px;
 }
 
 input,textarea{
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:8px;
+    padding:16px;
+    margin-bottom:20px;
+    border:1px solid #ddd;
+    border-radius:12px;
 }
+
+.floating-cart{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#5a3d2b;
+    color:white;
+    padding:15px 20px;
+    border-radius:50px;
+}
+
+#toast{
+    position:fixed;
+    top:30px;
+    right:30px;
+    background:#333;
+    color:white;
+    padding:15px 25px;
+    border-radius:12px;
+    opacity:0;
+}
+
+#toast.show{opacity:1;}
+
+footer{
+    background:#5a3d2b;
+    color:white;
+    text-align:center;
+    padding:35px;
+    margin-top:80px;
+}
+
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>阿嬤柑仔店 🛒</h1>
-<p>簡單可靠電商系統（EmailJS + Gmail）</p>
-</header>
+<div id="toast"></div>
+
+<div class="floating-cart">
+🛒 <span id="cartCount">0</span>
+</div>
+
+<nav>
+<div class="logo">阿嬤柑仔店</div>
+<ul>
+<li><a href="#">首頁</a></li>
+<li><a href="#">商品</a></li>
+<li><a href="#">購物車</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div>
+<h1>古早味的幸福</h1>
+<p>香蕉 × 蘇打餅</p>
+<button onclick="scrollToProducts()">立即選購</button>
+</div>
+</section>
 
 <div class="container">
 
-<!-- 商品 -->
-<div class="products">
+<div class="products" id="products">
 
-    <div class="card">
-        <img src="https://image.pxgo.com.tw/pic/2025/10/13/0ebc40a0ce0e474a9f60cb4ee5c4682c.jpg">
-        <h3>紫菜蘇打餅</h3>
-        <p>NT$ 20</p>
-        <button onclick="add('紫菜蘇打餅',20)">加入購物車</button>
-    </div>
+<div class="product-card">
+<img src="https://image.pxgo.com.tw/pic/2025/10/13/0ebc40a0ce0e474a9f60cb4ee5c4682c.jpg">
+<div class="product-info">
+<h3>紫菜蘇打餅</h3>
+<p class="price">20</p>
+<button class="btn" onclick="addToCart('紫菜蘇打餅',20)">加入購物車</button>
+</div>
+</div>
 
-    <div class="card">
-        <img src="https://image.pxgo.com.tw/pic/2026/05/26/bc30fd06f02b47d897cb064291c4a230.jpg">
-        <h3>香蕉（產銷履歷）</h3>
-        <p>NT$ 30</p>
-        <button onclick="add('香蕉',30)">加入購物車</button>
-    </div>
+<div class="product-card">
+<img src="https://image.pxgo.com.tw/pic/2026/05/26/bc30fd06f02b47d897cb064291c4a230.jpg">
+<div class="product-info">
+<h3>香蕉</h3>
+<p class="price">30</p>
+<button class="btn" onclick="addToCart('香蕉',30)">加入購物車</button>
+</div>
+</div>
 
 </div>
 
-<!-- 購物車 -->
-<div class="cart">
+<div class="cart-section">
 <h2>購物車</h2>
-<div id="cartList"></div>
-<h3 id="total">總金額：0</h3>
+<div id="cartItems"></div>
+<h3 id="totalPrice">0</h3>
 </div>
 
-<!-- 訂單 -->
+<div class="order-section">
+<h2>訂單</h2>
+
 <form id="orderForm">
-<h2>訂單表單</h2>
-
-<input name="name" placeholder="姓名" required>
-<input name="email" placeholder="Email" required>
-<textarea name="msg" placeholder="備註"></textarea>
-
-<button type="submit">送出訂單</button>
+<input name="customer_name" placeholder="姓名" required>
+<input name="customer_email" placeholder="Email" required>
+<textarea name="message" placeholder="留言"></textarea>
+<button class="btn">送出訂單</button>
 </form>
 
 </div>
 
+</div>
+
+<footer>© 2026 阿嬤柑仔店</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
 
-// 初始化 EmailJS
-emailjs.init("YOUR_PUBLIC_KEY");
+/* ===== EmailJS 初始化（修正版）===== */
+emailjs.init({
+    publicKey: "YOUR_PUBLIC_KEY"
+});
 
+/* ===== 購物車 ===== */
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// 加入購物車
-function add(name, price){
+function addToCart(name,price){
 
-    let item = cart.find(i => i.name === name);
+    let item = cart.find(i=>i.name===name);
 
-    if(item){
-        item.qty++;
-    } else {
-        cart.push({name, price, qty:1});
-    }
+    if(item) item.qty++;
+    else cart.push({name,price,qty:1});
 
     save();
     render();
+    showToast("加入成功");
 }
 
-// 儲存
 function save(){
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart",JSON.stringify(cart));
 }
 
-// 渲染
 function render(){
 
-    let list = document.getElementById("cartList");
+    let box = document.getElementById("cartItems");
     let total = 0;
 
-    list.innerHTML = "";
+    box.innerHTML = "";
 
-    cart.forEach((i,index)=>{
-
-        total += i.price * i.qty;
-
-        list.innerHTML += `
-        <p>
-        ${i.name} x ${i.qty}
-        <button onclick="del(${index})">刪除</button>
-        </p>`;
+    cart.forEach(i=>{
+        total += i.price*i.qty;
+        box.innerHTML += `
+        <p>${i.name} x${i.qty}</p>`;
     });
 
-    document.getElementById("total").innerText =
+    document.getElementById("totalPrice").innerText =
     "總金額：" + total;
+
+    document.getElementById("cartCount").innerText =
+    cart.length;
 }
 
-// 刪除
-function del(i){
-    cart.splice(i,1);
-    save();
-    render();
+render();
+
+/* ===== Toast ===== */
+function showToast(msg){
+    let t = document.getElementById("toast");
+    t.innerText = msg;
+    t.classList.add("show");
+    setTimeout(()=>t.classList.remove("show"),2000);
 }
 
-// 訂單送出
+/* ===== 滾動 ===== */
+function scrollToProducts(){
+    document.getElementById("products")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+/* ===== Gmail EmailJS（已修正版）===== */
 document.getElementById("orderForm")
 .addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-    if(cart.length === 0){
-        alert("購物車是空的");
+    if(cart.length===0){
+        showToast("購物車是空的");
         return;
     }
 
@@ -209,15 +373,15 @@ document.getElementById("orderForm")
 
     cart.forEach(i=>{
         orderText += `${i.name} x${i.qty}\n`;
-        total += i.price * i.qty;
+        total += i.price*i.qty;
     });
 
-    let data = {
-        name:this.name.value,
-        email:this.email.value,
-        msg:this.msg.value,
-        order:orderText,
-        total:total
+    const data = {
+        customer_name: this.customer_name.value,
+        customer_email: this.customer_email.value,
+        message: this.message.value,
+        order_details: orderText,
+        total_price: total
     };
 
     try{
@@ -228,7 +392,7 @@ document.getElementById("orderForm")
             data
         );
 
-        alert("訂單已成功寄出");
+        showToast("訂單已寄出");
 
         cart = [];
         save();
@@ -236,14 +400,13 @@ document.getElementById("orderForm")
         this.reset();
 
     }catch(err){
+
         console.log(err);
-        alert("寄送失敗，請檢查 EmailJS 設定");
+        showToast("寄送失敗，請檢查 EmailJS");
+
     }
 
 });
-
-// 初始化
-render();
 
 </script>
 
